@@ -67,10 +67,7 @@
   .icon-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
   .icon-btn:active{transform:scale(.94)}
 
-  /* زر المفضلة في الهيدر */
-  .fav-header-btn{
-    position:relative;
-  }
+  .fav-header-btn{position:relative;}
   .fav-header-btn:hover{
     background:rgba(var(--heart-rgb),.16);
     border-color:var(--heart);
@@ -134,7 +131,6 @@
   .hero__sub{font-size:.9rem;color:var(--muted);display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
   .hero__sub i{color:var(--gold);font-size:.8rem}
 
-  /* زر المفضلة في البطل */
   .hero__fav{
     position:relative;z-index:2;
     width:52px;height:52px;min-width:52px;
@@ -186,7 +182,6 @@
   }
   .field select:focus-visible, .field input:focus-visible{border-color:var(--accent)}
 
-  /* شريط التبويبات */
   .tabs{
     display:flex; gap:.5rem; margin-bottom:1.25rem;
     padding:.35rem;
@@ -265,7 +260,6 @@
     box-shadow:0 0 0 2px rgba(var(--accent-rgb),.45), 0 6px 20px rgba(var(--accent-rgb),.22);
   }
 
-  /* منطقة التشغيل (النقر عليها يشغل السورة) */
   .surah-card__play-area{
     flex:1;
     display:flex;
@@ -300,7 +294,6 @@
   .surah-card:hover .surah-card__play{color:var(--accent)}
   .surah-card.is-active .surah-card__play{color:var(--accent)}
 
-  /* زر القلب في البطاقة — كبير وسهل الضغط */
   .fav-btn{
     width:48px;
     align-self:stretch;
@@ -341,14 +334,14 @@
   .empty-note i{font-size:2rem;display:block;margin-bottom:.75rem;opacity:.5}
   .empty-note .empty-sub{font-size:.85rem;opacity:.75;margin-top:.4rem}
 
-  /* زر مسح المفضلة */
+  /* ✅ زر مسح المفضلة — بلون القلب، يظهر فقط داخل تبويب المفضلة */
   .clear-favs{
     display:inline-flex;align-items:center;gap:.4rem;
     padding:.5rem .9rem;
     border-radius:9px;
-    border:1px solid var(--border);
-    background:var(--bg-alt);
-    color:var(--muted);
+    border:1px solid rgba(var(--heart-rgb),.35);
+    background:rgba(var(--heart-rgb),.08);
+    color:var(--heart);
     font-size:.8rem;font-weight:600;
     transition:background .2s,color .2s,border-color .2s, transform .15s;
     touch-action:manipulation;
@@ -356,9 +349,8 @@
     cursor:pointer;
   }
   .clear-favs:hover{
-    background:rgba(var(--heart-rgb),.16);
+    background:rgba(var(--heart-rgb),.20);
     border-color:var(--heart);
-    color:var(--heart);
   }
   .clear-favs:active{transform:scale(.96)}
   .clear-favs:disabled{opacity:.4;cursor:not-allowed}
@@ -400,7 +392,6 @@
   .player__title{font-size:.92rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .player__sub{font-size:.75rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:.1rem}
 
-  /* زر القلب في المشغل */
   .player__fav{
     width:44px;height:44px;min-width:44px;
     border-radius:11px;
@@ -600,7 +591,6 @@
     </div>
     <div class="header-spacer"></div>
 
-    <!-- زر المفضلة في الهيدر — يفتح تبويب المفضلة -->
     <button class="icon-btn fav-header-btn" id="favHeaderBtn" title="عرض المفضلة" aria-label="عرض المفضلة">
       <i class="fa-solid fa-heart"></i>
       <span class="fav-count" id="favHeaderCount">0</span>
@@ -625,7 +615,6 @@
       </div>
     </div>
 
-    <!-- زر المفضلة في البطل -->
     <button class="hero__fav" id="heroFavBtn" title="إضافة إلى المفضلة" aria-label="إضافة إلى المفضلة">
       <i class="fa-regular fa-heart"></i>
     </button>
@@ -642,7 +631,6 @@
     </div>
   </section>
 
-  <!-- شريط التبويبات -->
   <div class="tabs" role="tablist">
     <button class="tab-btn is-active" id="tabAll" role="tab" aria-selected="true" type="button">
       <i class="fa-solid fa-list-ul"></i>
@@ -661,9 +649,10 @@
       <h2 id="gridHeading"><i class="fa-solid fa-list-ul"></i> قائمة السور</h2>
       <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
         <span class="count" id="countLabel"></span>
+        <!-- ✅ زر مسح المفضلة — يظهر فقط في تبويب المفضلة -->
         <button class="clear-favs" id="clearFavsBtn" style="display:none" type="button">
           <i class="fa-solid fa-trash-can"></i>
-          <span id="clearFavsText">مسح الكل</span>
+          <span id="clearFavsText">مسح المفضلة</span>
         </button>
       </div>
     </div>
@@ -681,7 +670,6 @@
         <div class="player__sub" id="pSub">—</div>
       </div>
 
-      <!-- زر المفضلة في المشغل -->
       <button class="player__fav" id="playerFavBtn" title="إضافة إلى المفضلة" aria-label="إضافة إلى المفضلة">
         <i class="fa-regular fa-heart"></i>
       </button>
@@ -853,7 +841,7 @@ function showToast(msg, type) {
 }
 
 /* =========================================================
-   المفضلة: تحميل، حفظ، تبديل
+   المفضلة
    ========================================================= */
 function loadFavorites() {
   try {
@@ -893,11 +881,9 @@ function toggleFavorite(n, { silent = false } = {}) {
   saveFavorites();
   updateFavUI();
 
-  // إذا كنا في تبويب المفضلة، أعد بناء الشبكة لإظهار/إخفاء السورة
   if (state.view === 'fav') {
     buildSurahGrid();
   } else {
-    // تحديث قلب البطاقة فقط دون إعادة بناء كاملة
     updateCardFavButton(n);
   }
 }
@@ -945,47 +931,46 @@ function updateFavUI() {
     playerFavBtn.setAttribute('aria-label', heroFavBtn.title);
   }
 
-  // زر مسح الكل
+  // ✅ زر مسح المفضلة — يظهر فقط داخل تبويب المفضلة
   const clearBtn = $('clearFavsBtn');
   if (clearBtn) {
-    clearBtn.style.display = count > 0 ? 'inline-flex' : 'none';
-    clearBtn.disabled = count === 0;
+    const showClear = (state.view === 'fav') && count > 0;
+    clearBtn.style.display = showClear ? 'inline-flex' : 'none';
+    clearBtn.disabled = !showClear;
   }
 }
 
 /* =========================================================
-   مسح الكل بتأكيد داخلي (بدون confirm)
+   مسح المفضلة بتأكيد داخلي واضح
    ========================================================= */
 function doClearAllFavorites() {
   const btn = $('clearFavsBtn');
   const txt = $('clearFavsText');
 
   if (confirmState === 'clear') {
-    // التنفيذ الفعلي
     clearTimeout(confirmTimer);
     confirmState = null;
     btn.classList.remove('confirming');
-    txt.textContent = 'مسح الكل';
+    txt.textContent = 'مسح المفضلة';
 
     state.favorites.clear();
     saveFavorites();
-    showToast('تم مسح جميع المفضلة', 'remove');
+    showToast('تمت إزالة جميع السور من المفضلة (السور نفسها لم تُحذف)', 'remove');
     buildSurahGrid();
     updateFavUI();
     return;
   }
 
-  // طلب التأكيد
   confirmState = 'clear';
   btn.classList.add('confirming');
   txt.textContent = 'اضغط للتأكيد';
-  showToast('اضغط مرة أخرى لتأكيد المسح', 'warn');
+  showToast('سيتم تفريغ المفضلة فقط — اضغط الزر مرة أخرى للتأكيد', 'warn');
 
   clearTimeout(confirmTimer);
   confirmTimer = setTimeout(() => {
     confirmState = null;
     btn.classList.remove('confirming');
-    txt.textContent = 'مسح الكل';
+    txt.textContent = 'مسح المفضلة';
   }, 3000);
 }
 
@@ -1016,7 +1001,7 @@ function buildReciters() {
 }
 
 /* =========================================================
-   السور الظاهرة في الشبكة
+   السور الظاهرة
    ========================================================= */
 function getVisibleSurahs() {
   if (state.view === 'fav') {
@@ -1058,7 +1043,6 @@ function buildSurahGrid() {
     card.className = 'surah-card' + (s.number === state.currentSurah ? ' is-active' : '');
     card.dataset.number = s.number;
 
-    // منطقة التشغيل (منفصلة عن زر القلب)
     const playArea = document.createElement('div');
     playArea.className = 'surah-card__play-area';
     playArea.setAttribute('role', 'button');
@@ -1074,7 +1058,6 @@ function buildSurahGrid() {
       <span class="surah-card__play"><i class="fa-solid fa-play"></i></span>
     `;
 
-    // زر المفضلة منفصل تماماً
     const favBtn = document.createElement('button');
     favBtn.type = 'button';
     favBtn.className = 'fav-btn' + (isFavNow ? ' is-fav' : '');
@@ -1094,7 +1077,7 @@ function buildSurahGrid() {
 }
 
 /* =========================================================
-   تحديث حالة البطاقات النشطة
+   تحديث البطاقات النشطة
    ========================================================= */
 function refreshActiveCards() {
   const grid = $('surahGrid');
@@ -1169,7 +1152,7 @@ function updatePlayIcon() {
 }
 
 /* =========================================================
-   ربط أحداث المفضلة والشبكة
+   ربط أحداث المفضلة
    ========================================================= */
 function setupFavoriteEvents() {
   const heroFavBtn = $('heroFavBtn');
@@ -1189,7 +1172,6 @@ function setupFavoriteEvents() {
     toggleFavorite(state.currentSurah);
   });
 
-  // زر الهيدر — ينتقل لتبويب المفضلة
   favHeaderBtn.addEventListener('click', (e) => {
     e.preventDefault();
     setView('fav');
@@ -1197,16 +1179,13 @@ function setupFavoriteEvents() {
     if (tabs) tabs.scrollIntoView({ behavior:'smooth', block:'start' });
   });
 
-  // زر مسح الكل
   clearFavsBtn.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
     doClearAllFavorites();
   });
 
-  // تفويض النقر داخل الشبكة
   $('surahGrid').addEventListener('click', (e) => {
-    // أولوية قصوى لزر المفضلة
     const favBtn = e.target.closest('.fav-btn');
     if (favBtn) {
       e.preventDefault();
@@ -1215,7 +1194,6 @@ function setupFavoriteEvents() {
       toggleFavorite(n);
       return;
     }
-    // منطقة التشغيل
     const playArea = e.target.closest('.surah-card__play-area');
     if (playArea) {
       e.preventDefault();
@@ -1223,7 +1201,6 @@ function setupFavoriteEvents() {
     }
   });
 
-  // دعم لوحة المفاتيح
   $('surahGrid').addEventListener('keydown', (e) => {
     if (e.key !== 'Enter' && e.key !== ' ') return;
     const playArea = e.target.closest('.surah-card__play-area');
@@ -1251,12 +1228,17 @@ function setView(view) {
     heading.innerHTML = '<i class="fa-solid fa-list-ul"></i> قائمة السور';
   }
 
-  // إعادة ضبط التأكيد عند التبديل
+  // إعادة ضبط التأكيد
   confirmState = null;
   clearTimeout(confirmTimer);
   const btn = $('clearFavsBtn');
   btn.classList.remove('confirming');
-  $('clearFavsText').textContent = 'مسح الكل';
+  $('clearFavsText').textContent = 'مسح المفضلة';
+
+  // ✅ إخفاء زر المسح فوراً إذا كنا خارج تبويب المفضلة
+  if (view !== 'fav') {
+    btn.style.display = 'none';
+  }
 
   buildSurahGrid();
 }
@@ -1461,7 +1443,6 @@ document.addEventListener('keydown', e => {
   loadFavorites();
   buildReciters();
 
-  // تبويبات
   $('tabAll').addEventListener('click', () => setView('all'));
   $('tabFav').addEventListener('click', () => setView('fav'));
 
