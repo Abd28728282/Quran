@@ -15,12 +15,14 @@
     --text:#f3f4ff; --muted:#b8bad6; --border:#3a3a5f;
     --accent:#818cf8; --accent-hover:#6366f1; --accent-rgb:129,140,248;
     --gold:#fbbf24; --success:#34d399;
+    --heart:#f472b6; --heart-rgb:244,114,182;
   }
   html[data-theme="light"]{
     --bg:#f8fafc; --bg-alt:#ffffff; --bg-hover:#eef2ff;
     --text:#1e1b4b; --muted:#475569; --border:#c7d2fe;
     --accent:#6366f1; --accent-hover:#4f46e5; --accent-rgb:99,102,241;
     --gold:#d97706; --success:#059669;
+    --heart:#ec4899; --heart-rgb:236,72,153;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   *:focus{outline:none}
@@ -58,10 +60,41 @@
     width:40px;height:40px;display:flex;align-items:center;justify-content:center;
     border:1px solid var(--border);border-radius:10px;background:var(--bg);
     color:var(--text);transition:background .2s,color .2s,border-color .2s;
-    font-size:.95rem;
+    font-size:.95rem; position:relative;
   }
   .icon-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
   .icon-btn:active{transform:scale(.96)}
+
+  /* زر المفضلة في الهيدر */
+  .fav-header-btn{
+    position:relative;
+    transition:background .2s,color .2s,border-color .2s, transform .15s;
+  }
+  .fav-header-btn:hover{
+    background:rgba(var(--heart-rgb),.16);
+    border-color:var(--heart);
+    color:var(--heart);
+  }
+  .fav-header-btn.is-active{
+    background:var(--heart);
+    border-color:var(--heart);
+    color:#fff;
+    box-shadow:0 4px 14px rgba(var(--heart-rgb),.35);
+  }
+  .fav-header-btn .fav-count{
+    position:absolute; top:-6px; left:-6px;
+    min-width:18px;height:18px;padding:0 4px;
+    border-radius:99px;
+    background:var(--heart); color:#fff;
+    font-size:.65rem;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    border:2px solid var(--bg-alt);
+    transform:scale(0);
+    transition:transform .25s cubic-bezier(.34,1.56,.64,1);
+    pointer-events:none;
+  }
+  .fav-header-btn .fav-count.is-visible{transform:scale(1)}
+  .fav-header-btn.is-active .fav-count{background:#fff;color:var(--heart)}
 
   .container{max-width:1100px;margin:0 auto;padding:1.5rem 1rem}
 
@@ -100,6 +133,35 @@
   .hero__sub{font-size:.9rem;color:var(--muted);display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
   .hero__sub i{color:var(--gold);font-size:.8rem}
 
+  /* زر المفضلة في البطل */
+  .hero__fav{
+    position:relative;z-index:2;
+    width:46px;height:46px;min-width:46px;
+    border-radius:14px;
+    border:1px solid rgba(var(--heart-rgb),.35);
+    background:rgba(var(--heart-rgb),.10);
+    color:var(--heart);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.15rem;
+    transition:background .2s,color .2s,border-color .2s,transform .15s;
+  }
+  .hero__fav:hover{
+    background:rgba(var(--heart-rgb),.22);
+    transform:scale(1.05);
+  }
+  .hero__fav:active{transform:scale(.94)}
+  .hero__fav.is-fav{
+    background:var(--heart);color:#fff;border-color:var(--heart);
+    box-shadow:0 6px 18px rgba(var(--heart-rgb),.40);
+    animation:heartPop .45s ease;
+  }
+  @keyframes heartPop{
+    0%{transform:scale(1)}
+    30%{transform:scale(1.25)}
+    60%{transform:scale(.95)}
+    100%{transform:scale(1)}
+  }
+
   .toolbar{
     display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-bottom:1.5rem;
   }
@@ -121,6 +183,56 @@
   }
   .field select:focus-visible, .field input:focus-visible{border-color:var(--accent)}
 
+  /* شريط التبويبات */
+  .tabs{
+    display:flex; gap:.5rem; margin-bottom:1.25rem;
+    padding:.35rem;
+    background:var(--bg-alt);
+    border:1px solid var(--border);
+    border-radius:14px;
+  }
+  .tab-btn{
+    flex:1;
+    display:flex;align-items:center;justify-content:center;gap:.5rem;
+    padding:.7rem .9rem;
+    border-radius:10px;
+    font-size:.88rem;font-weight:600;
+    color:var(--muted);
+    transition:background .2s, color .2s, transform .1s;
+    position:relative;
+  }
+  .tab-btn:hover{color:var(--text)}
+  .tab-btn:active{transform:scale(.98)}
+  .tab-btn.is-active{
+    background:var(--accent);color:#fff;
+    box-shadow:0 4px 14px rgba(var(--accent-rgb),.30);
+  }
+  .tab-btn .tab-count{
+    display:inline-flex;align-items:center;justify-content:center;
+    min-width:22px;height:20px;padding:0 6px;
+    border-radius:99px;
+    background:rgba(var(--accent-rgb),.16);
+    color:var(--accent);
+    font-size:.7rem;font-weight:700;
+    transition:background .2s,color .2s;
+  }
+  .tab-btn.is-active .tab-count{
+    background:rgba(255,255,255,.25);
+    color:#fff;
+  }
+  .tab-btn--fav .tab-count{
+    background:rgba(var(--heart-rgb),.16);
+    color:var(--heart);
+  }
+  .tab-btn--fav.is-active{
+    background:var(--heart);
+    box-shadow:0 4px 14px rgba(var(--heart-rgb),.30);
+  }
+  .tab-btn--fav.is-active .tab-count{
+    background:rgba(255,255,255,.25);
+    color:#fff;
+  }
+
   .grid-head{
     display:flex;align-items:center;justify-content:space-between;
     margin-bottom:.85rem;gap:1rem;flex-wrap:wrap;
@@ -139,6 +251,7 @@
     border-radius:12px;
     transition:transform .2s, border-color .2s, background .2s, box-shadow .2s;
     text-align:right; width:100%;
+    position:relative;
   }
   .surah-card:hover{background:var(--bg-hover);border-color:var(--accent);transform:translateY(-2px)}
   .surah-card:active{transform:translateY(0)}
@@ -158,14 +271,62 @@
   .surah-card__meta{flex:1;min-width:0;display:flex;flex-direction:column}
   .surah-card__name{font-size:.9rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .surah-card__type{font-size:.72rem;color:var(--muted);margin-top:.1rem}
-  .surah-card__play{color:var(--muted);font-size:.85rem;transition:color .2s;width:16px;text-align:center}
+  .surah-card__play{color:var(--muted); font-size:.85rem;transition:color .2s;width:16px;text-align:center}
   .surah-card:hover .surah-card__play{color:var(--accent)}
   .surah-card.is-active .surah-card__play{color:var(--accent)}
+
+  /* زر القلب في البطاقة */
+  .fav-btn{
+    width:30px;height:30px;min-width:30px;
+    border-radius:9px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--muted);
+    font-size:.82rem;
+    transition:background .2s,color .2s,transform .15s;
+    position:relative;
+    z-index:2;
+  }
+  .fav-btn:hover{
+    background:rgba(var(--heart-rgb),.16);
+    color:var(--heart);
+  }
+  .fav-btn:active{transform:scale(.88)}
+  .fav-btn.is-fav{
+    color:var(--heart);
+    background:rgba(var(--heart-rgb),.12);
+  }
+  .fav-btn.is-fav i{
+    animation:heartPop .4s ease;
+  }
+  @media(max-width:400px){
+    .fav-btn{width:28px;height:28px;min-width:28px;font-size:.75rem}
+    .surah-card{gap:.55rem;padding:.65rem .7rem}
+  }
 
   .empty-note{
     grid-column:1/-1; text-align:center; padding:3rem 1rem; color:var(--muted);
   }
   .empty-note i{font-size:2rem;display:block;margin-bottom:.75rem;opacity:.5}
+  .empty-note .empty-sub{font-size:.85rem;opacity:.75;margin-top:.4rem}
+
+  /* زر مسح المفضلة */
+  .clear-favs{
+    display:inline-flex;align-items:center;gap:.4rem;
+    padding:.4rem .8rem;
+    border-radius:9px;
+    border:1px solid var(--border);
+    background:var(--bg-alt);
+    color:var(--muted);
+    font-size:.78rem;font-weight:600;
+    transition:background .2s,color .2s,border-color .2s;
+  }
+  .clear-favs:hover{
+    background:rgba(var(--heart-rgb),.16);
+    border-color:var(--heart);
+    color:var(--heart);
+  }
+  .clear-favs:active{transform:scale(.96)}
+  .clear-favs:disabled{opacity:.4;cursor:not-allowed}
 
   .player{
     position:fixed; bottom:0; left:0; right:0; z-index:100;
@@ -193,6 +354,27 @@
   .player__info{flex:1;min-width:0}
   .player__title{font-size:.92rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .player__sub{font-size:.75rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:.1rem}
+
+  /* زر القلب في المشغل */
+  .player__fav{
+    width:38px;height:38px;min-width:38px;
+    border-radius:11px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--muted);
+    font-size:.95rem;
+    transition:background .2s,color .2s,transform .15s;
+  }
+  .player__fav:hover{
+    background:rgba(var(--heart-rgb),.16);
+    color:var(--heart);
+  }
+  .player__fav:active{transform:scale(.9)}
+  .player__fav.is-fav{
+    color:var(--heart);
+    background:rgba(var(--heart-rgb),.12);
+  }
+  .player__fav.is-fav i{animation:heartPop .4s ease}
+
   .player__controls{display:flex;align-items:center;gap:.4rem}
   .pbtn{
     width:40px;height:40px;display:flex;align-items:center;justify-content:center;
@@ -337,6 +519,7 @@
     .pbtn{width:36px;height:36px}
     .pbtn--main{width:48px;height:48px;font-size:1.05rem}
     .loader-ring{inset:4px}
+    .player__fav{width:34px;height:34px;min-width:34px}
   }
 
   .toast{
@@ -348,9 +531,11 @@
     transition:opacity .3s, transform .3s;z-index:200;
     box-shadow:0 10px 30px rgba(0,0,0,.3);
     display:flex;align-items:center;gap:.5rem;
+    max-width:90vw;
   }
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-  .toast i{color:var(--success)}
+  .toast i{color:var(--success);flex-shrink:0}
+  .toast i.heart{color:var(--heart)}
 </style>
 </head>
 <body>
@@ -362,6 +547,13 @@
       <span>القرآن الكريم</span>
     </div>
     <div class="header-spacer"></div>
+
+    <!-- زر المفضلة في الهيدر -->
+    <button class="icon-btn fav-header-btn" id="favHeaderBtn" title="المفضلة" aria-label="المفضلة">
+      <i class="fa-solid fa-heart"></i>
+      <span class="fav-count" id="favHeaderCount">0</span>
+    </button>
+
     <button class="icon-btn" id="themeBtn" title="تبديل المظهر" aria-label="تبديل المظهر">
       <i class="fa-solid fa-moon"></i>
     </button>
@@ -380,6 +572,11 @@
         <span id="heroReciter">محمد اللحيدان</span>
       </div>
     </div>
+
+    <!-- زر المفضلة في البطل -->
+    <button class="hero__fav" id="heroFavBtn" title="إضافة إلى المفضلة" aria-label="إضافة إلى المفضلة">
+      <i class="fa-regular fa-heart"></i>
+    </button>
   </section>
 
   <section class="toolbar">
@@ -393,10 +590,30 @@
     </div>
   </section>
 
+  <!-- شريط التبويبات -->
+  <div class="tabs" role="tablist">
+    <button class="tab-btn is-active" id="tabAll" role="tab" aria-selected="true">
+      <i class="fa-solid fa-list-ul"></i>
+      <span>كل السور</span>
+      <span class="tab-count" id="tabAllCount">114</span>
+    </button>
+    <button class="tab-btn tab-btn--fav" id="tabFav" role="tab" aria-selected="false">
+      <i class="fa-solid fa-heart"></i>
+      <span>المفضلة</span>
+      <span class="tab-count" id="tabFavCount">0</span>
+    </button>
+  </div>
+
   <section>
     <div class="grid-head">
-      <h2><i class="fa-solid fa-list-ul"></i> قائمة السور</h2>
-      <span class="count" id="countLabel"></span>
+      <h2 id="gridHeading"><i class="fa-solid fa-list-ul"></i> قائمة السور</h2>
+      <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+        <span class="count" id="countLabel"></span>
+        <button class="clear-favs" id="clearFavsBtn" style="display:none" disabled>
+          <i class="fa-solid fa-trash-can"></i>
+          مسح الكل
+        </button>
+      </div>
     </div>
     <div class="surah-grid" id="surahGrid"></div>
   </section>
@@ -411,6 +628,12 @@
         <div class="player__title" id="pTitle">—</div>
         <div class="player__sub" id="pSub">—</div>
       </div>
+
+      <!-- زر المفضلة في المشغل -->
+      <button class="player__fav" id="playerFavBtn" title="إضافة إلى المفضلة" aria-label="إضافة إلى المفضلة">
+        <i class="fa-regular fa-heart"></i>
+      </button>
+
       <div class="player__controls">
         <button class="pbtn" id="prevBtn" title="السورة السابقة"><i class="fa-solid fa-backward-step"></i></button>
 
@@ -473,7 +696,7 @@ if (metaViewport) {
 }
 
 /* =========================================================
-   قائمة القراء (روابط موثقة تعمل 100%)
+   قائمة القراء
    ========================================================= */
 const RECITERS = [
   { id:'lhdan',   name:'محمد اللحيدان',        base:'https://server8.mp3quran.net/lhdan/' },
@@ -522,49 +745,110 @@ const SURAHS = SURAH_NAMES.map((name, i) => ({
 }));
 
 /* =========================================================
-   الحالة
+   حالة التطبيق + المفضلة
    ========================================================= */
+const FAV_KEY = 'quran-favorites-v1';
+
 const state = {
   reciterIndex: 0,
   currentSurah: 11,
   playing: false,
   loading: false,
-  filtered: null
+  filtered: null,
+  view: 'all',            // 'all' | 'fav'
+  favorites: new Set()    // مجموعة أرقام السور المفضلة
 };
 
 let loadId = 0;
 
 /* =========================================================
-   العناصر
+   تحميل وحفظ المفضلة
    ========================================================= */
-const $ = id => document.getElementById(id);
-const audio       = $('audio');
-const player      = $('player');
-const hero        = $('hero');
-const playBtn     = $('playBtn');
-const playIcon    = playBtn.querySelector('.play-icon');
-const prevBtn     = $('prevBtn');
-const nextBtn     = $('nextBtn');
-const seekRange   = $('seekRange');
-const volumeRange = $('volumeRange');
-const volIcon     = $('volIcon');
-const curTimeEl   = $('curTime');
-const durTimeEl   = $('durTime');
-const surahGrid   = $('surahGrid');
-const reciterSel  = $('reciterSelect');
-const searchInput = $('searchInput');
-const countLabel  = $('countLabel');
-const heroTitle   = $('heroTitle');
-const heroReciter = $('heroReciter');
-const pTitle      = $('pTitle');
-const pSub        = $('pSub');
-const themeBtn    = $('themeBtn');
-const toast       = $('toast');
-const toastText   = $('toastText');
+function loadFavorites() {
+  try {
+    const raw = localStorage.getItem(FAV_KEY);
+    if (!raw) return;
+    const arr = JSON.parse(raw);
+    if (Array.isArray(arr)) {
+      arr.forEach(n => {
+        const num = Number(n);
+        if (Number.isInteger(num) && num >= 1 && num <= 114) {
+          state.favorites.add(num);
+        }
+      });
+    }
+  } catch (e) { /* تجاهل */ }
+}
+
+function saveFavorites() {
+  try {
+    localStorage.setItem(FAV_KEY, JSON.stringify([...state.favorites]));
+  } catch (e) { /* تجاهل */ }
+}
+
+function isFav(n) { return state.favorites.has(n); }
+
+function toggleFavorite(n, { silent = false } = {}) {
+  const surah = SURAHS[n - 1];
+  if (!surah) return;
+
+  if (state.favorites.has(n)) {
+    state.favorites.delete(n);
+    if (!silent) showToast('أُزيلت سورة ' + surah.name + ' من المفضلة', 'remove');
+  } else {
+    state.favorites.add(n);
+    if (!silent) showToast('أُضيفت سورة ' + surah.name + ' إلى المفضلة', 'add');
+  }
+  saveFavorites();
+  updateFavUI();
+  rebuildGridIfNeeded();
+}
+
+function updateFavUI() {
+  // زر الهيدر
+  const favHeaderBtn = $('favHeaderBtn');
+  const favCountEl = $('favHeaderCount');
+  const count = state.favorites.size;
+
+  favHeaderBtn.classList.toggle('is-active', count > 0);
+  favCountEl.textContent = count > 99 ? '99+' : count;
+  favCountEl.classList.toggle('is-visible', count > 0);
+
+  // عدّاد التبويبة
+  $('tabFavCount').textContent = count;
+
+  // زر البطل
+  const heroFavBtn = $('heroFavBtn');
+  const heroFavIcon = heroFavBtn.querySelector('i');
+  const curFav = isFav(state.currentSurah);
+  heroFavBtn.classList.toggle('is-fav', curFav);
+  heroFavIcon.className = curFav ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
+  heroFavBtn.title = curFav ? 'إزالة من المفضلة' : 'إضافة إلى المفضلة';
+  heroFavBtn.setAttribute('aria-label', heroFavBtn.title);
+
+  // زر المشغل
+  const playerFavBtn = $('playerFavBtn');
+  if (playerFavBtn) {
+    const pfIcon = playerFavBtn.querySelector('i');
+    playerFavBtn.classList.toggle('is-fav', curFav);
+    pfIcon.className = curFav ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
+    playerFavBtn.title = heroFavBtn.title;
+    playerFavBtn.setAttribute('aria-label', heroFavBtn.title);
+  }
+
+  // زر مسح الكل
+  const clearBtn = $('clearFavsBtn');
+  if (clearBtn) {
+    const showClear = state.view === 'fav' && count > 0;
+    clearBtn.style.display = showClear ? 'inline-flex' : 'none';
+    clearBtn.disabled = !showClear;
+  }
+}
 
 /* =========================================================
    أدوات
    ========================================================= */
+const $ = id => document.getElementById(id);
 const pad3 = n => String(n).padStart(3, '0');
 const surahUrl = (n, i = state.reciterIndex) => RECITERS[i].base + pad3(n) + '.mp3';
 
@@ -580,11 +864,20 @@ function setRangeProgress(el, pct) {
 }
 
 let toastTimer;
-function showToast(msg) {
-  toastText.textContent = msg;
-  toast.classList.add('show');
+function showToast(msg, type) {
+  const toastEl = $('toast');
+  const toastTextEl = $('toastText');
+  const iconEl = toastEl.querySelector('i');
+
+  toastTextEl.textContent = msg;
+  if (type === 'add' || type === 'remove') {
+    iconEl.className = 'fa-solid fa-heart heart';
+  } else {
+    iconEl.className = 'fa-solid fa-circle-check';
+  }
+  toastEl.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2200);
 }
 
 /* =========================================================
@@ -593,8 +886,8 @@ function showToast(msg) {
 function setLoading(on) {
   if (state.loading === on) return;
   state.loading = on;
-  playBtn.classList.toggle('is-loading', on);
-  playBtn.setAttribute('aria-label', on ? 'جارٍ التحميل' : (state.playing ? 'إيقاف' : 'تشغيل'));
+  $('playBtn').classList.toggle('is-loading', on);
+  $('playBtn').setAttribute('aria-label', on ? 'جارٍ التحميل' : (state.playing ? 'إيقاف' : 'تشغيل'));
   refreshActiveCards();
 }
 
@@ -602,35 +895,57 @@ function setLoading(on) {
    بناء واجهة القرّاء
    ========================================================= */
 function buildReciters() {
-  reciterSel.innerHTML = '';
+  const sel = $('reciterSelect');
+  sel.innerHTML = '';
   RECITERS.forEach((r, i) => {
     const opt = document.createElement('option');
     opt.value = i;
     opt.textContent = r.name;
-    reciterSel.appendChild(opt);
+    sel.appendChild(opt);
   });
-  reciterSel.value = state.reciterIndex;
+  sel.value = state.reciterIndex;
 }
 
 /* =========================================================
    بناء شبكة السور
    ========================================================= */
+function getVisibleSurahs() {
+  if (state.view === 'fav') {
+    return SURAHS.filter(s => state.favorites.has(s.number))
+      .filter(s => !state.filtered || state.filtered.some(f => f.number === s.number));
+  }
+  return state.filtered || SURAHS;
+}
+
 function buildSurahGrid() {
-  const list = state.filtered || SURAHS;
-  surahGrid.innerHTML = '';
+  const grid = $('surahGrid');
+  const list = getVisibleSurahs();
+  grid.innerHTML = '';
 
   if (!list.length) {
-    surahGrid.innerHTML = '<div class="empty-note"><i class="fa-solid fa-magnifying-glass"></i>لا توجد نتائج مطابقة للبحث</div>';
-    countLabel.textContent = '';
+    grid.innerHTML = state.view === 'fav'
+      ? `<div class="empty-note">
+           <i class="fa-regular fa-heart"></i>
+           لا توجد سور في المفضلة بعد
+           <div class="empty-sub">اضغط على أيقونة القلب في أي سورة لإضافتها هنا</div>
+         </div>`
+      : `<div class="empty-note">
+           <i class="fa-solid fa-magnifying-glass"></i>
+           لا توجد نتائج مطابقة للبحث
+         </div>`;
+    $('countLabel').textContent = '';
+    updateFavUI();
     return;
   }
 
   const frag = document.createDocumentFragment();
   list.forEach(s => {
-    const btn = document.createElement('button');
+    const isFavNow = isFav(s.number);
+    const btn = document.createElement('div');
     btn.className = 'surah-card' + (s.number === state.currentSurah ? ' is-active' : '');
-    btn.type = 'button';
     btn.dataset.number = s.number;
+    btn.setAttribute('role', 'button');
+    btn.setAttribute('tabindex', '0');
     btn.innerHTML = `
       <span class="surah-card__num">${s.number}</span>
       <span class="surah-card__meta">
@@ -638,19 +953,31 @@ function buildSurahGrid() {
         <span class="surah-card__type">${s.type}</span>
       </span>
       <span class="surah-card__play"><i class="fa-solid fa-play"></i></span>
+      <button class="fav-btn${isFavNow ? ' is-fav' : ''}" type="button"
+              title="${isFavNow ? 'إزالة من المفضلة' : 'إضافة إلى المفضلة'}"
+              aria-label="${isFavNow ? 'إزالة من المفضلة' : 'إضافة إلى المفضلة'}"
+              data-fav="${s.number}">
+        <i class="${isFavNow ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+      </button>
     `;
     frag.appendChild(btn);
   });
-  surahGrid.appendChild(frag);
-  countLabel.textContent = list.length + ' سورة';
+  grid.appendChild(frag);
+  $('countLabel').textContent = list.length + ' سورة';
   refreshActiveCards();
+  updateFavUI();
+}
+
+function rebuildGridIfNeeded() {
+  if (state.view === 'fav') buildSurahGrid();
 }
 
 /* =========================================================
    تحديث حالة البطاقات
    ========================================================= */
 function refreshActiveCards() {
-  surahGrid.querySelectorAll('.surah-card').forEach(card => {
+  const grid = $('surahGrid');
+  grid.querySelectorAll('.surah-card').forEach(card => {
     const isActive = Number(card.dataset.number) === state.currentSurah;
     card.classList.toggle('is-active', isActive);
     const icon = card.querySelector('.surah-card__play i');
@@ -675,25 +1002,26 @@ function playSurah(number, { autoplay = true } = {}) {
   const surah = SURAHS[number - 1];
   const reciter = RECITERS[state.reciterIndex];
 
-  heroTitle.textContent = 'سورة ' + surah.name;
-  heroReciter.textContent = reciter.name;
-  pTitle.textContent = 'سورة ' + surah.name;
-  pSub.textContent = reciter.name + ' • ' + surah.type;
+  $('heroTitle').textContent = 'سورة ' + surah.name;
+  $('heroReciter').textContent = reciter.name;
+  $('pTitle').textContent = 'سورة ' + surah.name;
+  $('pSub').textContent = reciter.name + ' • ' + surah.type;
   document.title = 'سورة ' + surah.name + ' — ' + reciter.name;
 
-  setRangeProgress(seekRange, 0);
-  seekRange.value = 0;
-  curTimeEl.textContent = '0:00';
-  durTimeEl.textContent = '0:00';
+  setRangeProgress($('seekRange'), 0);
+  $('seekRange').value = 0;
+  $('curTime').textContent = '0:00';
+  $('durTime').textContent = '0:00';
 
-  audio.src = surahUrl(number);
+  $('audio').src = surahUrl(number);
 
-  player.classList.add('is-visible');
+  $('player').classList.add('is-visible');
   refreshActiveCards();
+  updateFavUI(); // تحديث قلب البطل/المشغل للسورة الجديدة
 
   if (autoplay) {
     setLoading(true);
-    const p = audio.play();
+    const p = $('audio').play();
     if (p && p.catch) {
       p.catch(() => {
         if (myId !== loadId) return;
@@ -709,18 +1037,95 @@ function playSurah(number, { autoplay = true } = {}) {
    أيقونة التشغيل
    ========================================================= */
 function updatePlayIcon() {
+  const playBtn = $('playBtn');
+  const playIcon = playBtn.querySelector('.play-icon');
   playIcon.className = 'play-icon fa-solid ' + (state.playing ? 'fa-pause' : 'fa-play');
   playBtn.classList.toggle('is-loading', state.loading);
   playBtn.setAttribute('aria-label', state.loading ? 'جارٍ التحميل' : (state.playing ? 'إيقاف' : 'تشغيل'));
-  player.classList.toggle('is-playing', state.playing);
-  hero.classList.toggle('is-playing', state.playing);
+  $('player').classList.toggle('is-playing', state.playing);
+  $('hero').classList.toggle('is-playing', state.playing);
   refreshActiveCards();
+}
+
+/* =========================================================
+   ربط أحداث المفضلة
+   ========================================================= */
+function setupFavoriteEvents() {
+  const heroFavBtn = $('heroFavBtn');
+  const playerFavBtn = $('playerFavBtn');
+  const favHeaderBtn = $('favHeaderBtn');
+  const clearFavsBtn = $('clearFavsBtn');
+
+  heroFavBtn.addEventListener('click', () => toggleFavorite(state.currentSurah));
+  playerFavBtn.addEventListener('click', () => toggleFavorite(state.currentSurah));
+
+  favHeaderBtn.addEventListener('click', () => {
+    setView(state.view === 'fav' ? 'all' : 'fav');
+  });
+
+  clearFavsBtn.addEventListener('click', () => {
+    if (!state.favorites.size) return;
+    if (confirm('هل تريد مسح جميع السور من المفضلة؟')) {
+      state.favorites.clear();
+      saveFavorites();
+      showToast('تم مسح جميع المفضلة', 'remove');
+      buildSurahGrid();
+      updateFavUI();
+    }
+  });
+
+  // تفويض النقر داخل الشبكة
+  $('surahGrid').addEventListener('click', e => {
+    const favBtn = e.target.closest('.fav-btn');
+    if (favBtn) {
+      e.stopPropagation();
+      const n = Number(favBtn.dataset.fav);
+      toggleFavorite(n);
+      return;
+    }
+    const card = e.target.closest('.surah-card');
+    if (!card) return;
+    playSurah(Number(card.dataset.number));
+  });
+
+  // دعم لوحة المفاتيح
+  $('surahGrid').addEventListener('keydown', e => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const card = e.target.closest('.surah-card');
+    if (!card) return;
+    if (e.target.closest('.fav-btn')) return;
+    e.preventDefault();
+    playSurah(Number(card.dataset.number));
+  });
+}
+
+/* =========================================================
+   تبديل التبويبات
+   ========================================================= */
+function setView(view) {
+  state.view = view;
+
+  $('tabAll').classList.toggle('is-active', view === 'all');
+  $('tabAll').setAttribute('aria-selected', view === 'all');
+  $('tabFav').classList.toggle('is-active', view === 'fav');
+  $('tabFav').setAttribute('aria-selected', view === 'fav');
+
+  const heading = $('gridHeading');
+  if (view === 'fav') {
+    heading.innerHTML = '<i class="fa-solid fa-heart" style="color:var(--heart)"></i> السور المفضلة';
+  } else {
+    heading.innerHTML = '<i class="fa-solid fa-list-ul"></i> قائمة السور';
+  }
+
+  buildSurahGrid();
 }
 
 /* =========================================================
    أحداث المشغل
    ========================================================= */
-playBtn.addEventListener('click', () => {
+const audio = $('audio');
+
+$('playBtn').addEventListener('click', () => {
   if (!audio.src) {
     playSurah(state.currentSurah);
     return;
@@ -734,25 +1139,26 @@ playBtn.addEventListener('click', () => {
   }
 });
 
-prevBtn.addEventListener('click', () => {
+$('prevBtn').addEventListener('click', () => {
   let n = state.currentSurah - 1;
   if (n < 1) n = 114;
   playSurah(n);
 });
 
-nextBtn.addEventListener('click', () => {
+$('nextBtn').addEventListener('click', () => {
   let n = state.currentSurah + 1;
   if (n > 114) n = 1;
   playSurah(n);
 });
 
 let isSeeking = false;
+const seekRange = $('seekRange');
 seekRange.addEventListener('input', () => {
   isSeeking = true;
   const pct = Number(seekRange.value);
   setRangeProgress(seekRange, pct);
   if (audio.duration) {
-    curTimeEl.textContent = fmtTime((pct / 100) * audio.duration);
+    $('curTime').textContent = fmtTime((pct / 100) * audio.duration);
   }
 });
 seekRange.addEventListener('change', () => {
@@ -761,6 +1167,9 @@ seekRange.addEventListener('change', () => {
   }
   isSeeking = false;
 });
+
+const volumeRange = $('volumeRange');
+const volIcon = $('volIcon');
 
 function updateVolumeUI() {
   const v = Number(volumeRange.value);
@@ -828,7 +1237,7 @@ audio.addEventListener('ended', () => {
 });
 
 audio.addEventListener('loadedmetadata', () => {
-  durTimeEl.textContent = fmtTime(audio.duration);
+  $('durTime').textContent = fmtTime(audio.duration);
 });
 
 audio.addEventListener('timeupdate', () => {
@@ -836,7 +1245,7 @@ audio.addEventListener('timeupdate', () => {
   const pct = (audio.currentTime / audio.duration) * 100;
   seekRange.value = pct;
   setRangeProgress(seekRange, pct);
-  curTimeEl.textContent = fmtTime(audio.currentTime);
+  $('curTime').textContent = fmtTime(audio.currentTime);
 });
 
 audio.addEventListener('error', () => {
@@ -847,21 +1256,15 @@ audio.addEventListener('error', () => {
   updatePlayIcon();
 });
 
-surahGrid.addEventListener('click', e => {
-  const card = e.target.closest('.surah-card');
-  if (!card) return;
-  playSurah(Number(card.dataset.number));
-});
-
-reciterSel.addEventListener('change', () => {
-  state.reciterIndex = Number(reciterSel.value);
+$('reciterSelect').addEventListener('change', () => {
+  state.reciterIndex = Number($('reciterSelect').value);
   const wasPlaying = !audio.paused;
   playSurah(state.currentSurah, { autoplay: wasPlaying });
   showToast('القارئ: ' + RECITERS[state.reciterIndex].name);
 });
 
-searchInput.addEventListener('input', () => {
-  const q = searchInput.value.trim();
+$('searchInput').addEventListener('input', () => {
+  const q = $('searchInput').value.trim();
   if (!q) {
     state.filtered = null;
   } else {
@@ -874,15 +1277,18 @@ searchInput.addEventListener('input', () => {
   buildSurahGrid();
 });
 
+/* =========================================================
+   المظهر
+   ========================================================= */
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   try { localStorage.setItem('quran-theme', theme); } catch(e) {}
-  themeBtn.innerHTML = theme === 'dark'
+  $('themeBtn').innerHTML = theme === 'dark'
     ? '<i class="fa-solid fa-moon"></i>'
     : '<i class="fa-solid fa-sun"></i>';
 }
 
-themeBtn.addEventListener('click', () => {
+$('themeBtn').addEventListener('click', () => {
   const current = document.documentElement.getAttribute('data-theme');
   applyTheme(current === 'dark' ? 'light' : 'dark');
 });
@@ -895,11 +1301,11 @@ document.addEventListener('keydown', e => {
 
   if (e.code === 'Space') {
     e.preventDefault();
-    playBtn.click();
+    $('playBtn').click();
   } else if (e.code === 'ArrowRight') {
-    prevBtn.click();
+    $('prevBtn').click();
   } else if (e.code === 'ArrowLeft') {
-    nextBtn.click();
+    $('nextBtn').click();
   }
 });
 
@@ -911,13 +1317,26 @@ document.addEventListener('keydown', e => {
   try { saved = localStorage.getItem('quran-theme') || 'dark'; } catch(e) {}
   applyTheme(saved);
 
+  loadFavorites();
   buildReciters();
-  buildSurahGrid();
+
+  // تبويبات
+  $('tabAll').addEventListener('click', () => setView('all'));
+  $('tabFav').addEventListener('click', () => setView('fav'));
+
+  setupFavoriteEvents();
+
+  setView('all'); // سيبني الشبكة تلقائياً
 
   volumeRange.value = 1;
   updateVolumeUI();
 
+  // فتح المشغل جاهزاً بدون تشغيل تلقائي
   playSurah(state.currentSurah, { autoplay: false });
+  updateFavUI();
+
+  // عدّاد تبويبة "كل السور"
+  $('tabAllCount').textContent = SURAHS.length;
 })();
 </script>
 
