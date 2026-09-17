@@ -27,13 +27,12 @@
   *:focus{outline:none}
   *:focus:not(:focus-visible){outline:none;box-shadow:none}
 
-  /* ===== منع التكبير والتصغير ===== */
   html, body{
     -webkit-text-size-adjust:100%;
     -moz-text-size-adjust:100%;
     text-size-adjust:100%;
-    touch-action:manipulation;      /* يمنع pinch-zoom والـ double-tap zoom */
-    overscroll-behavior-y:none;     /* يمنع سحب الصفحة لإعادة التحميل على الجوال */
+    touch-action:manipulation;
+    overscroll-behavior-y:none;
   }
   body{
     font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;
@@ -44,7 +43,6 @@
   a{color:inherit;text-decoration:none}
   button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;-webkit-tap-highlight-color:transparent}
 
-  /* ===== Header ===== */
   .site-header{
     position:sticky; top:0; z-index:50;
     background:var(--bg-alt); border-bottom:1px solid var(--border);
@@ -68,7 +66,6 @@
 
   .container{max-width:1100px;margin:0 auto;padding:1.5rem 1rem}
 
-  /* ===== Hero ===== */
   .hero{
     background:linear-gradient(135deg,rgba(var(--accent-rgb),.16),rgba(var(--accent-rgb),.04));
     border:1px solid rgba(var(--accent-rgb),.28);
@@ -104,7 +101,6 @@
   .hero__sub{font-size:.9rem;color:var(--muted);display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
   .hero__sub i{color:var(--gold);font-size:.8rem}
 
-  /* ===== Toolbar ===== */
   .toolbar{
     display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-bottom:1.5rem;
   }
@@ -126,7 +122,6 @@
   }
   .field select:focus-visible, .field input:focus-visible{border-color:var(--accent)}
 
-  /* ===== Surah Grid ===== */
   .grid-head{
     display:flex;align-items:center;justify-content:space-between;
     margin-bottom:.85rem;gap:1rem;flex-wrap:wrap;
@@ -173,7 +168,6 @@
   }
   .empty-note i{font-size:2rem;display:block;margin-bottom:.75rem;opacity:.5}
 
-  /* ===== Sticky Player ===== */
   .player{
     position:fixed; bottom:0; left:0; right:0; z-index:100;
     background:var(--bg-alt); border-top:1px solid var(--border);
@@ -221,14 +215,12 @@
   .pbtn:disabled{opacity:.35;cursor:not-allowed}
   .pbtn--main > i{position:relative;z-index:2;transition:opacity .15s}
 
-  /* RTL flip for prev/next */
   html[dir="rtl"] #prevBtn i,
   html[dir="rtl"] #nextBtn i{
     display:inline-block;
     transform:scaleX(-1);
   }
 
-  /* ===== Loading Ring ===== */
   .loader-ring{
     position:absolute;
     inset:5px;
@@ -273,7 +265,6 @@
     100%{stroke-dasharray:90,200;stroke-dashoffset:-125}
   }
 
-  /* ===== Progress Row ===== */
   .progress-row{
     display:flex;align-items:center;gap:.7rem;
     font-size:.72rem;color:var(--muted);
@@ -286,7 +277,6 @@
     letter-spacing:.3px;
   }
 
-  /* ===== Custom Range Slider ===== */
   input[type=range]{
     -webkit-appearance:none;appearance:none;
     width:100%;height:6px;border-radius:99px;
@@ -350,7 +340,6 @@
     .loader-ring{inset:4px}
   }
 
-  /* ===== Toast ===== */
   .toast{
     position:fixed;bottom:150px;left:50%;
     transform:translateX(-50%) translateY(20px);
@@ -455,7 +444,7 @@
 
 <script>
 /* =========================================================
-   منع التكبير (احتياط إضافي لبعض المتصفحات)
+   منع التكبير
    ========================================================= */
 let lastTouchEnd = 0;
 document.addEventListener('touchend', (e) => {
@@ -498,17 +487,17 @@ const RECITERS = [
   { id:'juhany',  name:'عبد الله الجهني',    base:'https://server13.mp3quran.net/jhn/' },
   { id:'maher',   name:'ماهر المعيقلي',      base:'https://server12.mp3quran.net/maher/' },
   { id:'sudais',  name:'عبد الرحمن السديس',  base:'https://server11.mp3quran.net/sds/' },
-  // ===== القراء الجدد الذين تمت إضافتهم من الكود المقدم =====
   { id:'yasser',  name:'ياسر الدوسري',        base:'https://server11.mp3quran.net/yasser/' },
   { id:'shuraim', name:'سعود الشريم',         base:'https://server7.mp3quran.net/shur/' },
   { id:'budair',  name:'صلاح البدير',         base:'https://server6.mp3quran.net/budair/' },
   { id:'qasim',   name:'عبد المحسن القاسم',   base:'https://server8.mp3quran.net/qasm/' },
   { id:'fares',   name:'فارس عباد',           base:'https://server8.mp3quran.net/frs_a/' },
   { id:'tunaiji', name:'خالد الجليل',         base:'https://server10.mp3quran.net/jleel/' },
-  { id:'ayyub',   name:'محمد أيوب',           base:'https://server16.mp3quran.net/ayyub/' },
+  { id:'ayyub',   name:'محمد أيوب',           base:'https://server8.mp3quran.net/ayyub/' },
   { id:'tablawi', name:'محمد الطبلاوي',       base:'https://server12.mp3quran.net/tblawi/' },
   { id:'banna',   name:'محمود علي البنا',     base:'https://server8.mp3quran.net/banna/' },
-  { id:'rifai',   name:'هاني الرفاعي',         base:'https://server8.mp3quran.net/hani/' }
+  { id:'rifai',   name:'هاني الرفاعي',         base:'https://server8.mp3quran.net/hani/' },
+  { id:'a_jbr',   name:'علي جابر',             base:'https://server11.mp3quran.net/a_jbr/' }
 ];
 
 const SURAH_NAMES = [
