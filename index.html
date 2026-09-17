@@ -457,7 +457,6 @@
 /* =========================================================
    منع التكبير (احتياط إضافي لبعض المتصفحات)
    ========================================================= */
-// منع الـ double-tap zoom على iOS
 let lastTouchEnd = 0;
 document.addEventListener('touchend', (e) => {
   const now = Date.now();
@@ -465,24 +464,20 @@ document.addEventListener('touchend', (e) => {
   lastTouchEnd = now;
 }, { passive: false });
 
-// منع pinch-zoom (Safari على iOS لا يحترم user-scalable)
 document.addEventListener('gesturestart', e => e.preventDefault());
 document.addEventListener('gesturechange', e => e.preventDefault());
 document.addEventListener('gestureend', e => e.preventDefault());
 
-// منع تكبير الصفحة بـ Ctrl + عجلة الفأرة (سطح المكتب)
 document.addEventListener('wheel', e => {
   if (e.ctrlKey) e.preventDefault();
 }, { passive: false });
 
-// منع تكبير بلوحة المفاتيح (Ctrl / Cmd مع + أو -)
 document.addEventListener('keydown', e => {
   if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=' || e.key === '0')) {
     e.preventDefault();
   }
 });
 
-// منع تصغير الصفحة بالسحب (viewport meta كنقطة أخيرة)
 let metaViewport = document.querySelector('meta[name="viewport"]');
 if (metaViewport) {
   metaViewport.setAttribute('content',
@@ -502,7 +497,18 @@ const RECITERS = [
   { id:'ajamy',   name:'أحمد بن علي العجمي', base:'https://server10.mp3quran.net/ajm/' },
   { id:'juhany',  name:'عبد الله الجهني',    base:'https://server13.mp3quran.net/jhn/' },
   { id:'maher',   name:'ماهر المعيقلي',      base:'https://server12.mp3quran.net/maher/' },
-  { id:'sudais',  name:'عبد الرحمن السديس',  base:'https://server11.mp3quran.net/sds/' }
+  { id:'sudais',  name:'عبد الرحمن السديس',  base:'https://server11.mp3quran.net/sds/' },
+  // ===== القراء الجدد الذين تمت إضافتهم من الكود المقدم =====
+  { id:'yasser',  name:'ياسر الدوسري',        base:'https://server11.mp3quran.net/yasser/' },
+  { id:'shuraim', name:'سعود الشريم',         base:'https://server7.mp3quran.net/shur/' },
+  { id:'budair',  name:'صلاح البدير',         base:'https://server6.mp3quran.net/budair/' },
+  { id:'qasim',   name:'عبد المحسن القاسم',   base:'https://server8.mp3quran.net/qasm/' },
+  { id:'fares',   name:'فارس عباد',           base:'https://server8.mp3quran.net/frs_a/' },
+  { id:'tunaiji', name:'خالد الجليل',         base:'https://server10.mp3quran.net/jleel/' },
+  { id:'ayyub',   name:'محمد أيوب',           base:'https://server16.mp3quran.net/ayyub/' },
+  { id:'tablawi', name:'محمد الطبلاوي',       base:'https://server12.mp3quran.net/tblawi/' },
+  { id:'banna',   name:'محمود علي البنا',     base:'https://server8.mp3quran.net/banna/' },
+  { id:'rifai',   name:'هاني الرفاعي',         base:'https://server8.mp3quran.net/hani/' }
 ];
 
 const SURAH_NAMES = [
